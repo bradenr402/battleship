@@ -1,25 +1,30 @@
 import { Ship } from '../src/ship';
 
-it('creates a ship with the correct length', () => {
-  const ship = new Ship(4);
-  expect(ship.length).toBe(4);
-});
+describe('Ship', () => {
+  let ship;
 
-it("hit() method increases ship's hits", () => {
-  const ship = new Ship(3);
-  ship.hit();
-  expect(ship.hits).toBe(1);
-});
+  beforeEach(() => {
+    ship = new Ship(3);
+  });
 
-it('isSunk() returns true when ship is sunk', () => {
-  const ship = new Ship(2);
-  ship.hit();
-  ship.hit();
-  expect(ship.isSunk()).toBe(true);
-});
+  it('creates a ship with the correct length', () => {
+    expect(ship.length).toBe(3);
+  });
 
-it('isSunk() returns false when ship is not sunk', () => {
-  const ship = new Ship(3);
-  ship.hit();
-  expect(ship.isSunk()).toBe(false);
+  it("hit() method increases ship's hits", () => {
+    ship.hit();
+    expect(ship.hits).toBe(1);
+  });
+
+  it('isSunk() returns true when ship is sunk', () => {
+    ship.hit();
+    ship.hit();
+    ship.hit();
+    expect(ship.isSunk()).toBe(true);
+  });
+
+  it('isSunk() returns false when ship is not sunk', () => {
+    ship.hit();
+    expect(ship.isSunk()).toBe(false);
+  });
 });
