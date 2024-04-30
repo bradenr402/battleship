@@ -30,7 +30,7 @@ function createRow(r, color) {
     cell.dataset.row = r;
     cell.dataset.col = c;
 
-    cell.classList.add('size-12', 'border');
+    cell.classList.add('size-12', 'border', 'grid', 'place-items-center', 'font-bold');
 
     if (color === 'blue') cell.classList.add('border-blue-400', 'bg-blue-700');
     else cell.classList.add('border-rose-400', 'bg-rose-700', 'hover:bg-rose-400');
