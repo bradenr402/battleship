@@ -9,19 +9,31 @@ export class Gameboard {
 
   placeShip(ship, [row, col], direction) {
     if (direction === 'horizontal') {
-      if (col + ship.length >= 10) return 'invalid'
+      if (col + ship.length > 10) return 'invalid';
+
+      const selectedCells = this.grid[row].slice(col, col + ship.length);
+      if (selectedCells.some((cell) => cell instanceof Ship)) {
+        return 'invalid';
+      }
 
       for (let i = 0; i < ship.length; i++) {
         this.grid[row][col + i] = ship;
       }
     } else if (direction === 'vertical') {
-      if (row + ship.length >= 10) return 'invalid';
+      if (row + ship.length > 10) return 'invalid';
+
+      const selectedCells = this.grid.slice(row, row + ship.length).map((row) => row[col]);
+      if (selectedCells.some((cell) => cell instanceof Ship)) {
+        return 'invalid';
+      }
 
       for (let i = 0; i < ship.length; i++) {
         this.grid[row + i][col] = ship;
       }
     }
+
     this.ships.push(ship);
+    return [row, col];
   }
 
   receiveAttack(row, col) {

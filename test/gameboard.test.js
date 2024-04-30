@@ -35,8 +35,16 @@ describe('Gameboard', () => {
   it('placeShip() prevents ship from overflowing out of board', () => {
     const ship = new Ship(3);
 
-    expect(gameboard.placeShip(ship, [0, 7], 'horizontal')).toBe('invalid');
-    expect(gameboard.placeShip(ship, [7, 0], 'vertical')).toBe('invalid');
+    expect(gameboard.placeShip(ship, [0, 8], 'horizontal')).toBe('invalid');
+    expect(gameboard.placeShip(ship, [8, 0], 'vertical')).toBe('invalid');
+  });
+
+  it('placeShip() prevents ship from being placed on top of another', () => {
+    const ship1 = new Ship(3);
+    const ship2 = new Ship(4);
+
+    gameboard.placeShip(ship1, [1, 0], 'horizontal');
+    expect(gameboard.placeShip(ship2, [0, 1], 'vertical')).toBe('invalid');
   });
 
   it('receiveAttack() records attack', () => {
