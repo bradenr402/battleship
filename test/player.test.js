@@ -1,5 +1,5 @@
-import { Player } from '../src/player';
 import { Gameboard } from '../src/gameboard';
+import { Player } from '../src/player';
 import { Ship } from '../src/ship';
 
 describe('Player', () => {
@@ -14,9 +14,7 @@ describe('Player', () => {
 
   it('starts with an empty gameboard', () => {
     expect(player.gameboard).toBeInstanceOf(Gameboard);
-    expect(
-      player.gameboard.grid.every((row) => row.every((cell) => cell === null)),
-    ).toBe(true);
+    expect(player.gameboard.grid.every((row) => row.every((cell) => cell === null))).toBe(true);
   });
 
   it('placeShip() places ship on gameboard correctly', () => {
