@@ -19,24 +19,30 @@ export default async function createPlayerShips(player) {
     const currentShipName = document.getElementById('currentShip');
     currentShipName.textContent = ship.name;
 
-    const direction = await getShipDirection();
     let coordinates;
+    let direction = 'horizontal';
     let result = 'invalid';
 
     const handleCellHover = (event) => hoverCells(event, ship.length, direction);
     const handleCellUnhover = (event) => unhoverCells(event, ship.length, direction);
+    playerGameboard.onmouseover = handleCellHover;
+    playerGameboard.onmouseout = handleCellUnhover;
 
-    playerGameboard.addEventListener('mouseover', handleCellHover);
-    playerGameboard.addEventListener('mouseout', handleCellUnhover);
+    const rotateShipBtn = document.getElementById('rotateShipBtn');
+    rotateShipBtn.addEventListener('click', () => {
+      direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
+
+      playerGameboard.onmouseover = handleCellHover;
+      playerGameboard.onmouseout = handleCellUnhover;
+
+    });
 
     while (result === 'invalid') {
-      coordinates = await getShipCoordinates(ship);
+      coordinates = await getShipCoordinates();
       result = player.placeShip(ship, coordinates, direction);
     }
 
     highlightCells(playerGameboard, coordinates, ship.length, direction, shipNumber);
-    playerGameboard.removeEventListener('mouseover', handleCellHover);
-    playerGameboard.removeEventListener('mouseout', handleCellUnhover);
     shipNumber++;
   }
 
@@ -47,33 +53,11 @@ export default async function createPlayerShips(player) {
   await placeShip(destroyer);
 }
 
-async function getShipCoordinates(ship) {
+async function getShipCoordinates() {
   const playerGameboard = document.getElementById('playerGameboard');
 
   return awaitUserClick(playerGameboard).then((event) => [
     +event.target.dataset.row,
     +event.target.dataset.col,
   ]);
-}
-
-async function getShipDirection() {
-  function closeDirectionPopup() {
-    document.getElementById('directionPopup').classList.add('hidden');
-  }
-
-  function openDirectionPopup() {
-    document.getElementById('directionPopup').classList.remove('hidden');
-  }
-
-  openDirectionPopup();
-
-  const horizontalBtn = document.getElementById('horizontal');
-  const verticalBtn = document.getElementById('vertical');
-
-  const verticalPromise = awaitUserClick(verticalBtn).then(() => 'vertical');
-  const horizontalPromise = awaitUserClick(horizontalBtn).then(() => 'horizontal');
-
-  const direction = await Promise.race([horizontalPromise, verticalPromise]);
-  closeDirectionPopup();
-  return direction;
 }
