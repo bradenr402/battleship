@@ -16,7 +16,10 @@ export default function highlightCells(gameboard, [row, col], shipLength, direct
   }
 
   cells.forEach((cell) => {
-    cell.classList.add('bg-blue-200');
+    const computerGameboard = document.getElementById('computerGameboard');
+    if (gameboard === computerGameboard) cell.classList.add('bg-rose-200');
+    else cell.classList.add('bg-blue-200');
+
     cell.textContent = shipNumber;
   });
 }
