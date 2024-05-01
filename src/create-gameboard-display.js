@@ -1,15 +1,17 @@
 export default function createGameboardDisplay() {
-  const gameboardContainer = document.getElementById('gameboardContainer');
+  const playerGameboardContainer = document.getElementById('playerGameboardContainer');
+  const computerGameboardContainer = document.getElementById('computerGameboardContainer');
 
   const playerGameboard = createGameboard('player');
   const computerGameboard = createGameboard('computer');
 
-  gameboardContainer.append(playerGameboard, computerGameboard);
+  playerGameboardContainer.appendChild(playerGameboard);
+  computerGameboardContainer.appendChild(computerGameboard);
 }
 
 function createGameboard(playerType) {
   const gameboard = document.createElement('div');
-  gameboard.id = playerType + 'Gameboard';
+  gameboard.id = `${playerType}Gameboard`;
   gameboard.classList.add('mx-auto', 'grid', 'w-fit', 'grid-rows-10', 'place-items-center');
 
   for (let r = 0; r < 10; r++) {

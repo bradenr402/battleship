@@ -16,9 +16,6 @@ export default async function createPlayerShips(player) {
   async function placeShip(ship) {
     const playerGameboard = document.getElementById('playerGameboard');
 
-    const currentShipName = document.getElementById('currentShip');
-    currentShipName.textContent = ship.name;
-
     let coordinates;
     let direction = 'horizontal';
     let result = 'invalid';
