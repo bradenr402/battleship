@@ -1,15 +1,17 @@
 import './style.css';
 
+import addHoverClassToComputerGameboardCells from './add-hover-class-to-computer-gameboard-cells';
 import createGameboardDisplay from './create-gameboard-display';
 import showGameboard from './show-gameboard';
 import startGame from './start-game';
 
-function initiateGame() {
+async function initiateGame() {
   const opponentType = 'computer';
 
   createGameboardDisplay();
   showGameboard();
-  startGame(opponentType);
+  await startGame(opponentType);
+  addHoverClassToComputerGameboardCells();
 }
 
 const startGameBtn = document.getElementById('startGameBtn');
