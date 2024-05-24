@@ -9,12 +9,12 @@ export default function hoverCells(event, shipLength, direction) {
   const col = +hoveredCell.dataset.col;
 
   if (direction === 'horizontal') {
-    for (let i = 0; i < shipLength; i++) {
+    for (let i = 1; i < shipLength; i++) {
       const cell = playerGameboard.querySelector(`[data-row="${row}"][data-col="${col + i}"]`);
       if (cell) cells.push(cell);
     }
   } else {
-    for (let i = 0; i < shipLength; i++) {
+    for (let i = 1; i < shipLength; i++) {
       const cell = playerGameboard.querySelector(`[data-row="${row + i}"][data-col="${col}"]`);
       if (cell) cells.push(cell);
     }
