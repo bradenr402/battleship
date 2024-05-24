@@ -31,6 +31,7 @@ function createRow(r, color) {
     const cell = document.createElement('div');
     cell.dataset.row = r;
     cell.dataset.col = c;
+    cell.dataset.type = 'empty';
 
     cell.classList.add('size-12', 'border', 'grid', 'place-items-center', 'font-bold');
 

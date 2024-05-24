@@ -21,5 +21,6 @@ export default function highlightCells(gameboard, [row, col], shipLength, direct
     else cell.classList.add('bg-blue-200');
 
     cell.textContent = shipNumber;
+    cell.dataset.type = 'ship';
   });
 }
