@@ -1,21 +1,21 @@
 export default function unhoverCells(event, shipLength, direction) {
   const playerGameboard = document.getElementById('playerGameboard');
 
-  const hoveredCell = event.target;
+  const unhoveredCell = event.target;
 
   const cells = [];
-  if (hoveredCell.dataset.type !== 'ship') cells.push(hoveredCell);
+  if (unhoveredCell.dataset.type !== 'ship') cells.push(unhoveredCell);
 
-  const row = +hoveredCell.dataset.row;
-  const col = +hoveredCell.dataset.col;
+  const row = +unhoveredCell.dataset.row;
+  const col = +unhoveredCell.dataset.col;
 
   if (direction === 'horizontal') {
-    for (let i = 0; i < shipLength; i++) {
+    for (let i = 1; i < shipLength; i++) {
       const cell = playerGameboard.querySelector(`[data-row="${row}"][data-col="${col + i}"]`);
       if (cell && cell.dataset.type !== 'ship') cells.push(cell);
     }
   } else {
-    for (let i = 0; i < shipLength; i++) {
+    for (let i = 1; i < shipLength; i++) {
       const cell = playerGameboard.querySelector(`[data-row="${row + i}"][data-col="${col}"]`);
       if (cell && cell.dataset.type !== 'ship') cells.push(cell);
     }
