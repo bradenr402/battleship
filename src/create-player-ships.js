@@ -20,8 +20,14 @@ export default async function createPlayerShips(player) {
     let direction = 'horizontal';
     let result = 'invalid';
 
-    const handleCellHover = (event) => hoverCells(event, ship.length, direction);
-    const handleCellUnhover = (event) => unhoverCells(event, ship.length, direction);
+    let currentHoveredCell; // necessary to update hover display when using 'z' to rotate ship
+    const handleCellHover = (event) => {
+      currentHoveredCell = event.target;
+
+      hoverCells(currentHoveredCell, ship.length, direction);
+    };
+
+    const handleCellUnhover = (event) => unhoverCells(event.target, ship.length, direction);
     playerGameboard.onmouseover = handleCellHover;
     playerGameboard.onmouseout = handleCellUnhover;
 
@@ -31,7 +37,17 @@ export default async function createPlayerShips(player) {
 
       playerGameboard.onmouseover = handleCellHover;
       playerGameboard.onmouseout = handleCellUnhover;
+    });
 
+    window.addEventListener('keydown', (event) => {
+      if (event.key.toLowerCase() === 'z') {
+        unhoverCells(currentHoveredCell, ship.length, direction);
+        direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
+        hoverCells(currentHoveredCell, ship.length, direction);
+
+        playerGameboard.onmouseover = handleCellHover;
+        playerGameboard.onmouseout = handleCellUnhover;
+      }
     });
 
     while (result === 'invalid') {

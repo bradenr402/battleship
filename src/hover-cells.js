@@ -1,7 +1,7 @@
-export default function hoverCells(event, shipLength, direction) {
+export default function hoverCells(hoveredCell, shipLength, direction) {
   const playerGameboard = document.getElementById('playerGameboard');
 
-  const hoveredCell = event.target;
+  // const hoveredCell = event.target;
 
   const cells = [hoveredCell];
 
