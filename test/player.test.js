@@ -29,13 +29,13 @@ describe('Player', () => {
     const ship1 = new Ship(2);
     const ship2 = new Ship(3);
     player.placeShip(ship1, [0, 0], 'horizontal');
-    player.placeShip(ship2, [1, 0], 'vertical');
+    player.placeShip(ship2, [2, 2], 'vertical');
 
     player.gameboard.receiveAttack(0, 0);
     player.gameboard.receiveAttack(0, 1);
-    player.gameboard.receiveAttack(1, 0);
-    player.gameboard.receiveAttack(2, 0);
-    player.gameboard.receiveAttack(3, 0);
+    player.gameboard.receiveAttack(2, 2);
+    player.gameboard.receiveAttack(3, 2);
+    player.gameboard.receiveAttack(4, 2);
 
     expect(player.allSunk()).toBe(true);
   });
@@ -44,12 +44,11 @@ describe('Player', () => {
     const ship1 = new Ship(2);
     const ship2 = new Ship(3);
     player.placeShip(ship1, [0, 0], 'horizontal');
-    player.placeShip(ship2, [1, 0], 'vertical');
+    player.placeShip(ship2, [2, 2], 'vertical');
 
     player.gameboard.receiveAttack(0, 0);
     player.gameboard.receiveAttack(0, 1);
-    player.gameboard.receiveAttack(1, 0);
-    player.gameboard.receiveAttack(1, 1);
+    player.gameboard.receiveAttack(2, 2);
 
     expect(player.allSunk()).toBe(false);
   });

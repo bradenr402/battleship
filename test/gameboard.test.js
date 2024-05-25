@@ -47,6 +47,15 @@ describe('Gameboard', () => {
     expect(gameboard.placeShip(ship2, [0, 1], 'vertical')).toBe('invalid');
   });
 
+  it('placeShip() prevents ship from being placed adjacent to another', () => {
+    const ship1 = new Ship(3);
+    const ship2 = new Ship(4);
+
+    gameboard.placeShip(ship1, [1, 1], 'horizontal');
+    expect(gameboard.placeShip(ship2, [2, 2], 'vertical')).toBe('invalid');
+    expect(gameboard.grid[3][2]).toBeNull();
+  });
+
   it('receiveAttack() records attack', () => {
     gameboard.receiveAttack(3, 4);
     expect(gameboard.attacks).toContainEqual([3, 4]);
@@ -82,13 +91,13 @@ describe('Gameboard', () => {
     const ship1 = new Ship(2);
     const ship2 = new Ship(3);
     gameboard.placeShip(ship1, [0, 0], 'horizontal');
-    gameboard.placeShip(ship2, [1, 0], 'vertical');
+    gameboard.placeShip(ship2, [2, 2], 'vertical');
 
     gameboard.receiveAttack(0, 0);
     gameboard.receiveAttack(0, 1);
-    gameboard.receiveAttack(1, 0);
-    gameboard.receiveAttack(2, 0);
-    gameboard.receiveAttack(3, 0);
+    gameboard.receiveAttack(2, 2);
+    gameboard.receiveAttack(3, 2);
+    gameboard.receiveAttack(4, 2);
 
     expect(gameboard.allSunk()).toBe(true);
   });
@@ -97,12 +106,11 @@ describe('Gameboard', () => {
     const ship1 = new Ship(2);
     const ship2 = new Ship(3);
     gameboard.placeShip(ship1, [0, 0], 'horizontal');
-    gameboard.placeShip(ship2, [1, 0], 'vertical');
+    gameboard.placeShip(ship2, [2, 2], 'vertical');
 
     gameboard.receiveAttack(0, 0);
     gameboard.receiveAttack(0, 1);
-    gameboard.receiveAttack(1, 0);
-    gameboard.receiveAttack(1, 1);
+    gameboard.receiveAttack(2, 2);
 
     expect(gameboard.allSunk()).toBe(false);
   });
