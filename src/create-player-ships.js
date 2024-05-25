@@ -6,24 +6,18 @@ import hoverCells from './hover-cells';
 import unhoverCells from './unhover-cells';
 
 export default async function createPlayerShips(player) {
-  const carrier = new Ship(5, 'Carrier');
-  const battleship = new Ship(4, 'Battleship');
-  const submarine = new Ship(3, 'Submarine');
-  const cruiser = new Ship(3, 'Cruiser');
-  const destroyer = new Ship(2, 'Destroyer');
+  const playerGameboard = document.getElementById('playerGameboard');
+    const rotateShipBtn = document.getElementById('rotateShipBtn');
 
   let shipNumber = 1;
   async function placeShip(ship) {
-    const playerGameboard = document.getElementById('playerGameboard');
-
     let coordinates;
     let direction = 'horizontal';
     let result = 'invalid';
 
-    let currentHoveredCell; // necessary to update hover display when using 'z' to rotate ship
+    let currentHoveredCell; // to update hover display when 'z' is pressed to rotate ship
     const handleCellHover = (event) => {
       currentHoveredCell = event.target;
-
       hoverCells(currentHoveredCell, ship.length, direction);
     };
 
@@ -31,15 +25,14 @@ export default async function createPlayerShips(player) {
     playerGameboard.onmouseover = handleCellHover;
     playerGameboard.onmouseout = handleCellUnhover;
 
-    const rotateShipBtn = document.getElementById('rotateShipBtn');
-    rotateShipBtn.addEventListener('click', () => {
+    rotateShipBtn.onclick = () => {
       direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
 
       playerGameboard.onmouseover = handleCellHover;
       playerGameboard.onmouseout = handleCellUnhover;
-    });
+    };
 
-    window.addEventListener('keydown', (event) => {
+    window.onkeydown = (event) => {
       if (event.key.toLowerCase() === 'z') {
         unhoverCells(currentHoveredCell, ship.length, direction);
         direction = direction === 'horizontal' ? 'vertical' : 'horizontal';
@@ -48,7 +41,7 @@ export default async function createPlayerShips(player) {
         playerGameboard.onmouseover = handleCellHover;
         playerGameboard.onmouseout = handleCellUnhover;
       }
-    });
+    };
 
     while (result === 'invalid') {
       coordinates = await getShipCoordinates();
@@ -59,11 +52,20 @@ export default async function createPlayerShips(player) {
     shipNumber++;
   }
 
-  await placeShip(carrier);
-  await placeShip(battleship);
-  await placeShip(submarine);
-  await placeShip(cruiser);
-  await placeShip(destroyer);
+  await placeShip(new Ship(5, 'Carrier'));
+  await placeShip(new Ship(4, 'Battleship'));
+  await placeShip(new Ship(3, 'Submarine'));
+  await placeShip(new Ship(3, 'Cruiser'));
+  await placeShip(new Ship(2, 'Destroyer'));
+
+  playerGameboard.onmouseover = null;
+  playerGameboard.onmouseout = null;
+  window.onkeydown = null;
+  rotateShipBtn.onclick = null;
+  rotateShipBtn.classList.add('hidden');
+
+  document.getElementById('placeShipInstructions').classList.add('hidden');
+  document.getElementById('gameInstructions').classList.remove('hidden');
 }
 
 async function getShipCoordinates() {

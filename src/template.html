@@ -9,10 +9,17 @@
     <h1 class="mt-12 text-center text-4xl font-extrabold">Battleship!</h1>
 
     <div class="mx-auto my-4 space-y-6 text-center text-gray-600 sm:w-5/6 md:w-3/4 lg:w-1/2">
-      <div>
+      <div id="placeShipInstructions">
         <p>To place your ship, hover over your gameboard and click on a cell.</p>
         <p>To rotate your ship, press 'z' on your keyboard or click on the rotate button.</p>
+        <p>Ships may not be placed directly next to each other.</p>
       </div>
+
+      <div id="gameInstructions" class="hidden">
+        <p>To attack, hover over the enemy gameboard and click on a cell.</p>
+        <p id="turn" class='font-bold text-black mt-4 text-3xl'>Your turn!</p>
+      </div>
+
       <button
         type="button"
         id="rotateShipBtn"
