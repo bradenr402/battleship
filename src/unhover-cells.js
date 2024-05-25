@@ -1,8 +1,6 @@
 export default function unhoverCells(unhoveredCell, shipLength, direction) {
   const playerGameboard = document.getElementById('playerGameboard');
 
-  // const unhoveredCell = event.target;
-
   const cells = [];
   if (unhoveredCell.dataset.type !== 'ship') cells.push(unhoveredCell);
 
